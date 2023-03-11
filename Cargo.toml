@@ -2,6 +2,7 @@
 name = "create_waypoints"
 version = "0.1.0"
 edition = "2021"
+description = "Converts routes and tracks in GPX files to waypoints"
 
 [lib]
 crate-type = ["cdylib", "rlib"]

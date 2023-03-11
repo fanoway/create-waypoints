@@ -28,5 +28,8 @@ pub async fn main(req: Request, env: Env, _ctx: worker::Context) -> Result<Respo
     // Add as many routes as your Worker needs! Each route will get a `Request` for handling HTTP
     // functionality and a `RouteContext` which you can use to  and get route parameters and
     // Environment bindings like KV Stores, Durable Objects, Secrets, and Variables.
-    router.get("/", |_, _| Response::ok("Hello from Workers!"))
+    router
+        .get("/", |_, _| Response::ok("Hello from Workers!"))
+        .run(req, env)
+        .await
 }
