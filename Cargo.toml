@@ -3,3 +3,5 @@
 members = [
     "functions",
 ]
+
+default-members =["functions"]
