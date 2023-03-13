@@ -3,6 +3,15 @@
 version = 3
 
 [[package]]
+name = "approx"
+version = "0.5.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "cab112f0a86d568ea0e627cc1d6be74a1e9cd55214684db5561995f6dad897c6"
+dependencies = [
+ "num-traits",
+]
+
+[[package]]
 name = "async-trait"
 version = "0.1.66"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -93,6 +102,9 @@ version = "0.1.0"
 dependencies = [
  "cfg-if 0.1.10",
  "console_error_panic_hook",
+ "geojson",
+ "serde",
+ "serde-wasm-bindgen 0.5.0",
  "serde_json",
  "worker",
 ]
@@ -174,6 +186,30 @@ dependencies = [
 ]
 
 [[package]]
+name = "geo-types"
+version = "0.7.9"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a5f0b3068e1537a4b861ec3734f4aa9c317d537cf0845bf6fb6221973499d26c"
+dependencies = [
+ "approx",
+ "num-traits",
+ "serde",
+]
+
+[[package]]
+name = "geojson"
+version = "0.24.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "ff2cc39a555a57b2a5514e223d76e23779f853840cc3c67767f77f58dc2272b7"
+dependencies = [
+ "geo-types",
+ "log",
+ "serde",
+ "serde_json",
+ "thiserror",
+]
+
+[[package]]
 name = "http"
 version = "0.2.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -208,6 +244,12 @@ checksum = "445dde2150c55e483f3d8416706b97ec8e8237c307e5b7b4b8dd15e6af2a0730"
 dependencies = [
  "wasm-bindgen",
 ]
+
+[[package]]
+name = "libm"
+version = "0.2.6"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "348108ab3fba42ec82ff6e9564fc4ca0247bdccdc68dd8af9764bbc79c3c8ffb"
 
 [[package]]
 name = "log"
@@ -247,6 +289,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "578ede34cf02f8924ab9447f50c28075b4d3e5b269972345e7e0372b38c6cdcd"
 dependencies = [
  "autocfg",
+ "libm",
 ]
 
 [[package]]
@@ -397,18 +440,40 @@ checksum = "f91339c0467de62360649f8d3e185ca8de4224ff281f66000de5eb2a77a79041"
 
 [[package]]
 name = "serde"
-version = "1.0.154"
+version = "1.0.155"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8cdd151213925e7f1ab45a9bbfb129316bd00799784b174b7cc7bcd16961c49e"
+checksum = "71f2b4817415c6d4210bfe1c7bfcf4801b2d904cb4d0e1a8fdb651013c9e86b8"
 dependencies = [
  "serde_derive",
 ]
 
 [[package]]
-name = "serde_derive"
-version = "1.0.154"
+name = "serde-wasm-bindgen"
+version = "0.4.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "4fc80d722935453bcafdc2c9a73cd6fac4dc1938f0346035d84bf99fa9e33217"
+checksum = "e3b4c031cd0d9014307d82b8abf653c0290fbdaeb4c02d00c63cf52f728628bf"
+dependencies = [
+ "js-sys",
+ "serde",
+ "wasm-bindgen",
+]
+
+[[package]]
+name = "serde-wasm-bindgen"
+version = "0.5.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "f3b143e2833c57ab9ad3ea280d21fd34e285a42837aeb0ee301f4f41890fa00e"
+dependencies = [
+ "js-sys",
+ "serde",
+ "wasm-bindgen",
+]
+
+[[package]]
+name = "serde_derive"
+version = "1.0.155"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "d071a94a3fac4aff69d023a7f411e33f40f3483f8c5190b1953822b6b76d7630"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -627,9 +692,9 @@ dependencies = [
 
 [[package]]
 name = "worker"
-version = "0.0.11"
+version = "0.0.13"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "470b840b8417b7a232b6ed0b04dd38f0ad84d5d80f95e5e991d6f1cee6d75893"
+checksum = "f1318524ba8c0302553ef007c5437ff51589f144b664ec5fbdd090f904b05a3c"
 dependencies = [
  "async-trait",
  "chrono",
@@ -641,6 +706,7 @@ dependencies = [
  "matchit",
  "pin-project",
  "serde",
+ "serde-wasm-bindgen 0.4.5",
  "serde_json",
  "url",
  "wasm-bindgen",
@@ -668,9 +734,9 @@ dependencies = [
 
 [[package]]
 name = "worker-macros"
-version = "0.0.6"
+version = "0.0.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1c29ce5a41f5e7e644bc683681b62aed3adac838e01d18eb4e02a4dc30d4ac69"
+checksum = "9c621e3ad64ad7699776c07e58bc2418506850349a77d64a9a57101dd3288258"
 dependencies = [
  "async-trait",
  "proc-macro2",
@@ -684,9 +750,9 @@ dependencies = [
 
 [[package]]
 name = "worker-sys"
-version = "0.0.6"
+version = "0.0.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "825732b9b6360d6b1f5f614248317826cebf4878e36f61ccc71ca9dd53de8b41"
+checksum = "90f33ccde16fd5f0e0d1e8b260e7f8fdbb68f56bd5d115050bf3e5ffef0d1671"
 dependencies = [
  "cfg-if 1.0.0",
  "js-sys",
