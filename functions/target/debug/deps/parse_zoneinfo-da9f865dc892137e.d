@@ -1,0 +1,11 @@
+c:\Users\micha\Documents\create-waypoints\target\debug\deps\parse_zoneinfo-da9f865dc892137e.rmeta: C:\Users\micha\.cargo\registry\src\index.crates.io-6f17d22bba15001f\parse-zoneinfo-0.3.0\src\lib.rs C:\Users\micha\.cargo\registry\src\index.crates.io-6f17d22bba15001f\parse-zoneinfo-0.3.0\src\line.rs C:\Users\micha\.cargo\registry\src\index.crates.io-6f17d22bba15001f\parse-zoneinfo-0.3.0\src\structure.rs C:\Users\micha\.cargo\registry\src\index.crates.io-6f17d22bba15001f\parse-zoneinfo-0.3.0\src\table.rs C:\Users\micha\.cargo\registry\src\index.crates.io-6f17d22bba15001f\parse-zoneinfo-0.3.0\src\transitions.rs
+
+c:\Users\micha\Documents\create-waypoints\target\debug\deps\libparse_zoneinfo-da9f865dc892137e.rlib: C:\Users\micha\.cargo\registry\src\index.crates.io-6f17d22bba15001f\parse-zoneinfo-0.3.0\src\lib.rs C:\Users\micha\.cargo\registry\src\index.crates.io-6f17d22bba15001f\parse-zoneinfo-0.3.0\src\line.rs C:\Users\micha\.cargo\registry\src\index.crates.io-6f17d22bba15001f\parse-zoneinfo-0.3.0\src\structure.rs C:\Users\micha\.cargo\registry\src\index.crates.io-6f17d22bba15001f\parse-zoneinfo-0.3.0\src\table.rs C:\Users\micha\.cargo\registry\src\index.crates.io-6f17d22bba15001f\parse-zoneinfo-0.3.0\src\transitions.rs
+
+c:\Users\micha\Documents\create-waypoints\target\debug\deps\parse_zoneinfo-da9f865dc892137e.d: C:\Users\micha\.cargo\registry\src\index.crates.io-6f17d22bba15001f\parse-zoneinfo-0.3.0\src\lib.rs C:\Users\micha\.cargo\registry\src\index.crates.io-6f17d22bba15001f\parse-zoneinfo-0.3.0\src\line.rs C:\Users\micha\.cargo\registry\src\index.crates.io-6f17d22bba15001f\parse-zoneinfo-0.3.0\src\structure.rs C:\Users\micha\.cargo\registry\src\index.crates.io-6f17d22bba15001f\parse-zoneinfo-0.3.0\src\table.rs C:\Users\micha\.cargo\registry\src\index.crates.io-6f17d22bba15001f\parse-zoneinfo-0.3.0\src\transitions.rs
+
+C:\Users\micha\.cargo\registry\src\index.crates.io-6f17d22bba15001f\parse-zoneinfo-0.3.0\src\lib.rs:
+C:\Users\micha\.cargo\registry\src\index.crates.io-6f17d22bba15001f\parse-zoneinfo-0.3.0\src\line.rs:
+C:\Users\micha\.cargo\registry\src\index.crates.io-6f17d22bba15001f\parse-zoneinfo-0.3.0\src\structure.rs:
+C:\Users\micha\.cargo\registry\src\index.crates.io-6f17d22bba15001f\parse-zoneinfo-0.3.0\src\table.rs:
+C:\Users\micha\.cargo\registry\src\index.crates.io-6f17d22bba15001f\parse-zoneinfo-0.3.0\src\transitions.rs:
