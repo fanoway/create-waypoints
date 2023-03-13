@@ -84,13 +84,13 @@ async fn convert_lines_to_waypoints(json_lines: GeoJson) -> Result<GeoJson> {
     //  Reconstruct geo json with just corner points
     let mut waypoint_features: Vec<Feature> = Vec::new();
 
-    let mut i = 0;
+    let mut corner_count = 1;
 
     for point in waypoints {
         let new_geom = Geometry::new(Value::Point(point));
         let mut properties = JsonObject::new();
         let key = "title".to_string();
-        properties.insert(key, JsonValue::from(format!("Corner {}", &i)));
+        properties.insert(key, JsonValue::from(format!("Corner {}", &corner_count)));
         waypoint_features.push(Feature {
             bbox: None,
             geometry: Some(new_geom),
@@ -98,7 +98,7 @@ async fn convert_lines_to_waypoints(json_lines: GeoJson) -> Result<GeoJson> {
             properties: Some(properties),
             foreign_members: None,
         });
-        i += 1;
+        corner_count += 1;
     }
 
     let json_points = GeoJson::FeatureCollection(FeatureCollection {
