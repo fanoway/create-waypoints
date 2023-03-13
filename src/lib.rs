@@ -54,7 +54,7 @@ pub async fn main(req: Request, env: Env, _ctx: worker::Context) -> Result<Respo
             };
 
             match geo_json_points {
-                Ok(json) => Response::ok(json.to_string()),
+                Ok(json) => Response::from_json(&json),
                 Err(_) => Response::error("Invalid JSON body", 400),
             }
         })
