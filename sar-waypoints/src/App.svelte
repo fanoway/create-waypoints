@@ -3,7 +3,11 @@
 </script>
 
 <main>
-  <h1>Hello {name}!</h1>
+  <h1>sar-waypoints!</h1>
+  <p>
+    Use this tool to upload GeoJSON from SAR topo to extract waypoints from
+    assignment areas
+  </p>
 </main>
 
 <style>
