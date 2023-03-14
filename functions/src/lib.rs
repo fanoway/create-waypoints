@@ -1,27 +1,6 @@
-use serde::{Deserialize, Serialize};
 use worker::*;
 mod utils;
 use geojson::{Feature, FeatureCollection, GeoJson, Geometry, JsonObject, JsonValue, Value};
-
-#[derive(Debug, Deserialize, Serialize)]
-struct JsonGpx {
-    gpx: String,
-    metadata: String,
-    link: String,
-    time: String,
-    trk: JsonTrk,
-    name: String,
-}
-
-#[derive(Debug, Deserialize, Serialize)]
-struct JsonTrk {
-    name: String,
-    trkseg: JsonTrkSeg,
-}
-#[derive(Debug, Deserialize, Serialize)]
-struct JsonTrkSeg {
-    trkpt: String,
-}
 
 fn log_request(req: &Request) {
     console_log!(

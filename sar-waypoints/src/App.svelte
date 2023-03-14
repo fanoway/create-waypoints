@@ -1,5 +1,6 @@
 <script>
   import Dropzone from "svelte-file-dropzone";
+  import GeoJsonToGpx from "@dwayneparton/geojson-to-gpx";
 
   let files = {
     accepted: [],
@@ -27,8 +28,36 @@
         }
       );
 
-      const json = await res.json();
-      console.log(json);
+      const geoJSON = await res.json();
+      // console.log(geoJSON);
+
+      let file_name_no_ext = file.name.replace(/\.[^/.]+$/, "");
+      const options = {
+        metadata: {
+          name: file_name_no_ext,
+          author: {
+            name: "sar-waypoints",
+          },
+        },
+      };
+      const gpx = GeoJsonToGpx(geoJSON, options);
+      // console.log(gpx);
+
+      // convert document to string or post process it
+      let gpxString = new XMLSerializer().serializeToString(gpx);
+
+      // Change creator string
+      gpxString = gpxString.replace(
+        'creator="@dwayneparton/geojson-to-gpx"',
+        'creator="sar.ardron.one and @dwayneparton/geojson-to-gpx"'
+      );
+
+      // @see https://stackoverflow.com/questions/10654971/create-text-file-from-string-using-js-and-html5
+      const link = document.createElement("a");
+      link.download = file_name_no_ext + ".gpx";
+      const blob = new Blob([gpxString], { type: "text/xml" });
+      link.href = window.URL.createObjectURL(blob);
+      link.click();
     }
   }
 </script>
