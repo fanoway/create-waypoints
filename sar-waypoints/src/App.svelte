@@ -10,11 +10,25 @@
     files.accepted = [...files.accepted, ...acceptedFiles];
   }
 
-  function uploadfiles(_e) {
+  async function uploadfiles(_e) {
     console.log(files.accepted);
     for (let index in files.accepted) {
       let file = files.accepted[index];
-      // upload
+      const res = await fetch(
+        "https://create_waypoints.goldilocks.workers.dev/",
+        {
+          method: "POST",
+          body: file,
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            "content-type": "application/JSON",
+            "Access-Control-Request-Method": "POST",
+          },
+        }
+      );
+
+      const json = await res.json();
+      console.log(json);
     }
   }
 </script>
@@ -31,12 +45,7 @@
   <ol>
     {#each files.accepted as item}
       <li>
-        <div>
-          <h2>{item.name}</h2>
-          {#await item.text() then text}
-            <p>{text}</p>
-          {/await}
-        </div>
+        <h3>{item.name}</h3>
       </li>
     {/each}
   </ol>

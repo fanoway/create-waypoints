@@ -41,7 +41,29 @@ pub async fn main(req: Request, env: Env, _ctx: worker::Context) -> Result<Respo
 
     //  Routing
     let router = Router::new();
+
     router
+        .options_async("/", |req, _| async move {
+            let mut response = match req.method() {
+                Method::Post => Response::ok(""),
+                Method::Options => Response::ok(""),
+                _ => Response::error("Invalid method", 405),
+            };
+            response = match response {
+                Ok(resp) => {
+                    let mut cors = Cors::default();
+                    cors = cors.with_origins(vec!["*"]);
+                    cors = cors.with_methods(vec![Method::Post, Method::Options]);
+                    cors = cors.with_allowed_headers(vec!["*"]);
+                    match resp.with_cors(&cors) {
+                        Ok(resp) => Ok(resp),
+                        Err(err) => Err(err),
+                    }
+                }
+                Err(error) => Err(error),
+            };
+            return response;
+        })
         .post_async("/", |mut req, _| async move {
             let geo_json_lines: Result<GeoJson> = match req.json().await {
                 Ok(json) => Ok(json),
@@ -53,10 +75,53 @@ pub async fn main(req: Request, env: Env, _ctx: worker::Context) -> Result<Respo
                 Err(error) => Err(error),
             };
 
-            match geo_json_points {
+            let mut response = match geo_json_points {
                 Ok(json) => Response::from_json(&json),
-                Err(_) => Response::error("Invalid JSON body", 400),
-            }
+                Err(err) => Response::error(err.to_string(), 400),
+            };
+
+            response = match response {
+                Ok(resp) => {
+                    let mut cors = Cors::default();
+                    cors = cors.with_origins(vec!["*"]);
+                    cors = cors.with_methods(vec![Method::Post, Method::Options]);
+                    cors = cors.with_allowed_headers(vec!["*"]);
+                    match resp.with_cors(&cors) {
+                        Ok(resp) => Ok(resp),
+                        Err(err) => Err(err),
+                    }
+                }
+                Err(error) => Err(error),
+            };
+
+            // let res = match response {
+            //     Ok(mut resp) => {
+            //         match resp
+            //             .headers_mut()
+            //             .append("Access-Control-Allow-Origin", "*")
+            //         {
+            //             Ok(_) => (),
+            //             Err(_) => (),
+            //         };
+            //         Ok(resp)
+            //     }
+            //     Err(error) => Err(error),
+            // };
+
+            // let res2 = match res {
+            //     Ok(mut resp) => {
+            //         match resp
+            //             .headers_mut()
+            //             .append("Access-Control-Allow-Methods", "POST")
+            //         {
+            //             Ok(_) => (),
+            //             Err(_) => (),
+            //         };
+            //         Ok(resp)
+            //     }
+            //     Err(error) => Err(error),
+            // };
+            return response;
         })
         .run(req, env)
         .await
