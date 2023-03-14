@@ -73,33 +73,6 @@ pub async fn main(req: Request, env: Env, _ctx: worker::Context) -> Result<Respo
                 Err(error) => Err(error),
             };
 
-            // let res = match response {
-            //     Ok(mut resp) => {
-            //         match resp
-            //             .headers_mut()
-            //             .append("Access-Control-Allow-Origin", "*")
-            //         {
-            //             Ok(_) => (),
-            //             Err(_) => (),
-            //         };
-            //         Ok(resp)
-            //     }
-            //     Err(error) => Err(error),
-            // };
-
-            // let res2 = match res {
-            //     Ok(mut resp) => {
-            //         match resp
-            //             .headers_mut()
-            //             .append("Access-Control-Allow-Methods", "POST")
-            //         {
-            //             Ok(_) => (),
-            //             Err(_) => (),
-            //         };
-            //         Ok(resp)
-            //     }
-            //     Err(error) => Err(error),
-            // };
             return response;
         })
         .run(req, env)
@@ -114,12 +87,25 @@ async fn convert_lines_to_waypoints(json_lines: GeoJson) -> Result<GeoJson> {
     };
 
     let mut waypoints: Vec<Vec<f64>> = Vec::new();
+    let mut assy_names: Vec<String> = Vec::new();
 
     for feature in features {
+        let assy_name = match feature.properties {
+            Some(props) => match props.get("number") {
+                Some(name) => {
+                    let str_name = name.to_string();
+                    // Remove extra quote marks in name
+                    str_name.replace("\"", "")
+                }
+                None => "".to_string(),
+            },
+            None => "".to_string(),
+        };
         if let Value::Polygon(polys) = feature.geometry.unwrap().value {
             for shape_coords in polys {
                 for coord in shape_coords {
                     waypoints.push(coord);
+                    assy_names.push(assy_name.clone());
                 }
             }
         }
@@ -128,13 +114,21 @@ async fn convert_lines_to_waypoints(json_lines: GeoJson) -> Result<GeoJson> {
     //  Reconstruct geo json with just corner points
     let mut waypoint_features: Vec<Feature> = Vec::new();
 
-    let mut corner_count = 1;
+    let mut corner_count = 0;
 
     for point in waypoints {
         let new_geom = Geometry::new(Value::Point(point));
         let mut properties = JsonObject::new();
-        let key = "title".to_string();
-        properties.insert(key, JsonValue::from(format!("Corner {}", &corner_count)));
+        let key = "name".to_string();
+        let assy_name = &assy_names[corner_count];
+        properties.insert(
+            key,
+            JsonValue::from(format!(
+                "Assignment {} -> {}",
+                &assy_name,
+                &corner_count + 1
+            )),
+        );
         waypoint_features.push(Feature {
             bbox: None,
             geometry: Some(new_geom),
